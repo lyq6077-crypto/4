@@ -1,0 +1,92 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": []
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "XM7hSsX99dhL"
+      },
+      "outputs": [],
+      "source": [
+        "import random\n",
+        "import time\n",
+        "\n",
+        "# Step 1：更新遊戲標題與規則\n",
+        "print(\"=== 🎲 雙骰對決：豹子通殺 🎲 ===\")\n",
+        "print(\"遊戲規則：\")\n",
+        "print(\"1. 玩家與電腦每次各擲出 兩顆骰子 (1~6點)。\")\n",
+        "print(\"2. 豹子通殺：擲出兩顆相同點數為「豹子」，無條件擊敗一般點數組合！\")\n",
+        "print(\"3. 點數對決：雙方皆有或皆無豹子時，比對兩顆骰子總和大小。\")\n",
+        "print(\"4. 先獲得 3 勝的一方為最終贏家！\")\n",
+        "print(\"===================================\\n\")\n",
+        "\n",
+        "player_wins = 0\n",
+        "computer_wins = 0\n",
+        "round_num = 1\n",
+        "\n",
+        "while player_wins < 3 and computer_wins < 3:\n",
+        "    print(f\"--- 第 {round_num} 局 ---\")\n",
+        "    input(\"👉 按下 Enter 鍵擲骰子...\")\n",
+        "\n",
+        "    # Step 2：隨機擲骰子\n",
+        "    p1, p2 = random.randint(1, 6), random.randint(1, 6)\n",
+        "    c1, c2 = random.randint(1, 6), random.randint(1, 6)\n",
+        "\n",
+        "    p_sum = p1 + p2\n",
+        "    c_sum = c1 + c2\n",
+        "\n",
+        "    # Step 3：設計「豹子」偵測器\n",
+        "    p_is_double = (p1 == p2)\n",
+        "    c_is_double = (c1 == c2)\n",
+        "\n",
+        "    # 顯示雙方點數\n",
+        "    p_tag = \"【🔥豹子】\" if p_is_double else \"\"\n",
+        "    c_tag = \"【🔥豹子】\" if c_is_double else \"\"\n",
+        "    print(f\"👤 玩家擲出: {p1}, {p2} (總和:{p_sum}) {p_tag}\")\n",
+        "    time.sleep(0.5)\n",
+        "    print(f\"💻 電腦擲出: {c1}, {c2} (總和:{c_sum}) {c_tag}\")\n",
+        "\n",
+        "    # Step 4：全面改寫「勝負判斷」邏輯\n",
+        "    if p_is_double and not c_is_double:\n",
+        "        print(\"🎯 判斷：玩家豹子通殺！\")\n",
+        "        player_wins += 1\n",
+        "    elif c_is_double and not p_is_double:\n",
+        "        print(\"🎯 判斷：電腦豹子通殺！\")\n",
+        "        computer_wins += 1\n",
+        "    else:\n",
+        "        # 雙方皆有豹子，或皆無豹子，比總和\n",
+        "        if p_sum > c_sum:\n",
+        "            print(\"🎯 判斷：玩家點數較大！\")\n",
+        "            player_wins += 1\n",
+        "        elif c_sum > p_sum:\n",
+        "            print(\"🎯 判斷：電腦點數較大！\")\n",
+        "            computer_wins += 1\n",
+        "        else:\n",
+        "            print(\"🎯 判斷：雙方平手，無人得分！\")\n",
+        "\n",
+        "    print(f\"📊 目前戰況 => 玩家: {player_wins} 勝 | 電腦: {computer_wins} 勝\\n\")\n",
+        "    round_num += 1\n",
+        "\n",
+        "# 最終贏家判斷\n",
+        "if player_wins == 3:\n",
+        "    print(\"🏆 恭喜！你是最終贏家！\")\n",
+        "else:\n",
+        "    print(\"💀 電腦獲得最終勝利，請再接再厲！\")"
+      ]
+    }
+  ]
+}
